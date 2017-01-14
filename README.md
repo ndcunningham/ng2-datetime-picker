@@ -7,7 +7,8 @@ AngularJS 2 DateTime Picker
   <img src="http://i.imgur.com/g5qbBBz.png" width="50%" style="border:1px solid grey" />
 </a>
 
-[Plunker Example](https://plnkr.co/edit/su2aiL)
+[Plunker Example](https://plnkr.co/edit/su2aiL)  
+[French Example](https://plnkr.co/edit/J6hXyB?p=preview)
 
 
 ## How Does It Work
@@ -44,7 +45,7 @@ AngularJS 2 DateTime Picker
         })
         export class AppModule { }
 
-## Usage it in your code
+## Use it in your code
 
         
        <input
@@ -73,38 +74,43 @@ AngularJS 2 DateTime Picker
           
 For full example, please check `test` directory to see the example of;
 
-  - `systemjs.config.js`
   - `app.module.ts`
   -  and `app.component.ts`.
 
 ## Override default style
 
-The default style is written in `src/datetime-picker.component.ts`. 
-This can be overwritten by giving more details css seletor.
+The default style is written in `src/ng2-datetime-picker.component.ts`. 
+This can be overwritten by giving more details css selector.
  
 e.g., 
 
     #my-div .ng2-datetime-picker {
       background-color: blue;
     }
+    
 ## Override built-in date parser and date formatter
 
-The default date parser and formatter can only handle 'YYYY-MM-DD HH:MM' format if you are not using momentjs.
-If you use momentjs, you can use momentjs dateformat by adding the following in your html.
+The default date parser and formatter can only handle 'YYYY-MM-DD HH:MM' format
+if you are not using [momentjs](http://momentjs.com/). If you use momentjs, you 
+can use momentjs dateformat by adding the following in your html.
 
     <script src="moment-with-locales.min.js"></script>
 
-If you want to have your dateformat without using momentjs, 
-please override `DateTime.parser` and `DateTime.formatDate` function.
+If you want to have your own date format without using momentjs, 
+please override `Ng2DateTime.parser` and `Ng2DateTime.formatDate` function.
 For example, 
 
-    import { Ng2DatetimePickerModule, DateTime } from 'ng2-datetime-picker';
+    import { Ng2DatetimePickerModule, Ng2Datetime } from 'ng2-datetime-picker';
 
     // Override Date object formatter
-    DateTime.formatDate = (date: Date) : string => { ..... my own function .... };
+    Ng2Datetime.formatDate = (date: Date) : string => { 
+        ..... my own function that returns a string .... 
+    };
 
     // Override Date object parser
-    DateTime.parse = (str: any): Date => { .... my own function ... } ;
+    Ng2Datetime.parseDate = (str: any): Date => { 
+        .... my own function that returns a date ...
+    } ;
 
     @NgModule({
       imports: [BrowserModule, FormsModule, Ng2DatetimePickerModule],
@@ -112,6 +118,18 @@ For example,
       bootstrap: [ AppComponent ]
     })
     export class AppModule { }
+
+In addition, you can also override other static variables of `Ng2Datetime` class. The following
+is the list of variables that you can override.
+  
+  | Variable        | Default
+  |-----------------|----------------------
+  | days            | 1,2,....31
+  | daysOfWeek,     | Sunday, Monday, .....
+  | firstDayOfWeek  | 0 as in Sunday
+  | months,         | January, February
+  | formatDate      | returns YYYY-MM-DD HH:MM
+  | parseDate       | returns date from YYYY-MM-DD HH:MM
 
 ## **ng2-ui** welcomes new members and contributors
 
@@ -137,15 +155,19 @@ please send me email to `allenhwkim AT gmail.com` with your github id.
   All options are optional except value
 
   * **date-only**,  true or false, default is false
-  * **close-on-select**, true or false. indicates to close
-    datetime-picker when select a date. default: true
   * **time-only**, true or false, default is false 
-  * **first-day-of-week** start day of week, 0 is sunday
+  * **close-on-select**, true or false. indicates to close ng2-datetime-picker when select a date. default: true
   * **date-format**,  momentjs date format, e.g. YYYY-MM-DD hh:mm:ss
     You need to include `moment` js in your html to use date-format.
-    
     `<script src="moment.min.js"></script>`
-
+  * **first-day-of-week** start day of week, 0 is sunday
+  * **default-value** a date selected when a popup opens, default the current date
+  * **minute-step** the interval of minutes, default 1
+  * **min-date** Date, mininum selectable date
+  * **max-date** Date, maximum selectable date
+  * **min-hour** number, mininum selectable hour
+  * **max-hour** number, maximum selectable hour
+  * **disabled-dates**  Array of Date, dates not selectable
      
 ## For Developers
 
